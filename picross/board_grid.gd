@@ -1,6 +1,6 @@
-extends Node2D
+extends Control
 
-onready var size: Vector2 = get_parent().size
+onready var size: Vector2 = get_parent().rect_size
 onready var cells: Vector2 = get_parent().cells
 
 export var line_color : Color = Color.blue
@@ -9,6 +9,12 @@ export var strong_line_color : Color = Color.purple
 export var strong_line_frequency : int = 5;
 export var line_width : int = 1;
 export var strong_line_width : int = 2;
+
+
+func build_board():
+	size = get_parent().rect_size
+	cells = get_parent().cells
+	update()
 
 
 func _draw():

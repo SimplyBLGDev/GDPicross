@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 enum CELL_VALUE {
 	FREE, FILLED, CROSSED, MARK1, MARK2
@@ -6,8 +6,8 @@ enum CELL_VALUE {
 
 export var filled_color : Color = Color.black
 
-onready var size: Vector2 = get_parent().size
-onready var cells: Vector2 = get_parent().cells
+var size: Vector2 = Vector2.ZERO
+var cells: Vector2 = Vector2.ZERO
 
 var cell_values = Array(Array())
 
@@ -16,19 +16,16 @@ onready var mark1 = preload('res://picross/cells/cell_mark1.tscn')
 onready var mark2 = preload('res://picross/cells/cell_mark2.tscn')
 
 
-func _ready() -> void:
-	build_board()
-
-
 func build_board() -> void:
-	for x in range(size.x):
-		cell_values.append(Array())
-		for y in range(size.y):
-			cell_values[x].append(CELL_VALUE.FREE)
+	size = get_parent().rect_size
+	cells = get_parent().cells
+	print(cells)
+	print(size)
 	
-	for i in range(5, 10):
-		cell_values[0][i] = CELL_VALUE.FILLED
-		cell_values[1][i] = CELL_VALUE.CROSSED
+	for x in range(cells.x):
+		cell_values.append(Array())
+		for y in range(cells.y):
+			cell_values[x].append(CELL_VALUE.FREE)
 	
 	update_cells()
 
@@ -38,8 +35,8 @@ func update_cells() -> void:
 	
 	var cell_size = size / cells
 	
-	for y in range(size.y):
-		for x in range(size.x):
+	for y in range(cells.y):
+		for x in range(cells.x):
 			if cell_values[x][y] != CELL_VALUE.FREE and cell_values[x][y] != CELL_VALUE.FILLED:
 				var new_node
 				
@@ -74,8 +71,8 @@ func fill_cell(position: Vector2) -> void:
 func _draw() -> void:
 	var cell_size = size / cells
 	
-	for y in range(size.y):
-		for x in range(size.x):
+	for y in range(cells.y):
+		for x in range(cells.x):
 			if cell_values[x][y] == CELL_VALUE.FILLED:
 				var from : Vector2 = cell_size * Vector2(x, y)
 				draw_rect(Rect2(from, cell_size), filled_color)
