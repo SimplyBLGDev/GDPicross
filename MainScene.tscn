@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://picross/board.gd" type="Script" id=1]
+[ext_resource path="res://picross/board_grid.gd" type="Script" id=2]
+[ext_resource path="res://picross/board_background.gd" type="Script" id=3]
+[ext_resource path="res://picross/board_cells.gd" type="Script" id=4]
+[ext_resource path="res://kongtext.ttf" type="DynamicFontData" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 5 )
+
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
+
+[node name="Node" type="Node"]
+
+[node name="Board" type="Node2D" parent="."]
+position = Vector2( 112, 112 )
+script = ExtResource( 1 )
+size = Vector2( 600, 600 )
+
+[node name="BG" type="Node2D" parent="Board"]
+script = ExtResource( 3 )
+
+[node name="Cells" type="Node2D" parent="Board"]
+script = ExtResource( 4 )
+
+[node name="Grid" type="Node2D" parent="Board"]
+script = ExtResource( 2 )
+line_width = 2
+strong_line_width = 4
+
+[node name="Label" type="Label" parent="Board"]
+margin_left = -112.0
+margin_right = -72.0
+margin_bottom = 14.0
+theme = SubResource( 2 )
+text = "1235791"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 360, 720 )
+current = true
